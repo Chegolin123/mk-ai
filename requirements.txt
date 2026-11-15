@@ -1,0 +1,7 @@
+# Основные зависимости
+torch>=2.0          # для GPU ставить сборку с CUDA: pip install torch --index-url https://download.pytorch.org/whl/cu124
+pygame>=2.5
+numpy>=1.24
+
+# Только для tools/capture.py (скриншоты и GIF для документации)
+pillow>=10.0

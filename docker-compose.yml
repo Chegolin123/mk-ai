@@ -1,0 +1,33 @@
+services:
+  mk-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mk-ai:cpu
+    # Смоук по умолчанию: 20 эпизодов, без сохранения политики
+    command: ["--headless", "--episodes", "20", "--no-load"]
+    volumes:
+      - ./models:/app/models
+      - ./runs:/app/runs
+    restart: "no"
+
+  # GPU-вариант: docker compose --profile gpu up mk-ai-gpu
+  # Нужны nvidia-container-toolkit и драйвер на хосте.
+  mk-ai-gpu:
+    profiles: ["gpu"]
+    build:
+      context: .
+      dockerfile: Dockerfile.gpu
+    image: mk-ai:gpu
+    command: ["--headless", "--episodes", "500"]
+    volumes:
+      - ./models:/app/models
+      - ./runs:/app/runs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: "no"

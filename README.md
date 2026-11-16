@@ -9,6 +9,7 @@
   <img alt="PyTorch" src="https://img.shields.io/badge/pytorch-2.x%20%2B%20CUDA-EE4C2C?logo=pytorch&logoColor=white">
   <img alt="pygame" src="https://img.shields.io/badge/pygame-2.6-2E8B57">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-blue">
+  <a href="https://github.com/Chegolin123/mk-ai/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Chegolin123/mk-ai/actions/workflows/ci.yml/badge.svg"></a>
 </p>
 
 2D-файтинг с видом сбоку, где **обоими бойцами управляет одна нейросеть**, которая
@@ -93,6 +94,17 @@ python -c "import torch; print(torch.__version__, torch.cuda.is_available(), tor
 ```
 
 В нижней панели игры написано, на чём идёт обучение: `CUDA: <имя карты>` или `CPU`.
+
+### Docker
+
+```bash
+docker compose run --rm mk-ai                       # CPU, 20 эпизодов (смоук)
+docker compose --profile gpu run --rm mk-ai-gpu     # CUDA 12.4, нужен nvidia-container-toolkit
+```
+
+В контейнере тот же `game.py`: `--headless` для тренировок и безголового CI.
+Данные тренировок монтируются из `models/` и `runs/`, поэтому образ остаётся
+неизменным, а политика переживает пересоздание контейнера.
 
 ---
 
